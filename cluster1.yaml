@@ -1,0 +1,23 @@
+---
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  values:
+    global:
+      meshID: mesh1
+      multiCluster:
+        clusterName: fra
+      network: network1
+      externalIstiod: true
+  components:
+    ingressGateways:
+    - namespace: istio-system
+      name: istio-ingressgateway
+      enabled: true
+      k8s:
+        serviceAnnotations:
+          service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+          service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
+          service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "100"
+          oci.oraclecloud.com/oci-network-security-groups: "ocid1.networksecuritygroup.oc1.eu-frankfurt-1.aaaaaaaaj5opelxnb6fcxmvj7eqo3rg2plirw3zlouz2nhgz2aqszujhgkeq"
+          service.beta.kubernetes.io/oci-load-balancer-security-list-management-mode: "None"

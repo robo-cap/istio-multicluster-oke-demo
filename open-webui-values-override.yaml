@@ -1,0 +1,45 @@
+nameOverride: ""
+namespaceOverride: ""
+
+ollama:
+  enabled: false
+
+pipelines:
+  # -- Automatically install Pipelines chart to extend Open WebUI functionality using Pipelines: https://github.com/open-webui/pipelines
+  enabled: true
+  # -- This section can be used to pass required environment variables to your pipelines (e.g. Langfuse hostname)
+  extraEnvVars: []
+
+tika:
+  # -- Automatically install Apache Tika to extend Open WebUI
+  enabled: false
+
+# -- A list of Ollama API endpoints. These can be added in lieu of automatically installing the Ollama Helm chart, or in addition to it.
+ollamaUrls: []
+
+websocket:
+  # -- Enables websocket support in Open WebUI with env `ENABLE_WEBSOCKET_SUPPORT`
+  enabled: false
+
+
+# -- Deploys a Redis cluster with subchart 'redis' from bitnami
+redis-cluster:
+  # -- Enable Redis installation
+  enabled: false
+
+# -- Value of cluster domain
+clusterDomain: cluster.local
+
+
+persistence:
+  enabled: true
+  size: 50Gi
+
+# -- OpenAI base API URL to use. Defaults to the Pipelines service endpoint when Pipelines are enabled, and "https://api.openai.com/v1" if Pipelines are not enabled and this value is blank
+openaiBaseApiUrl: "http://sglang.demo.svc.cluster.local/"
+
+# -- Env vars added to the Open WebUI deployment. Most up-to-date environment variables can be found here: https://docs.openwebui.com/getting-started/env-configuration/
+extraEnvVars:
+  # -- Default API key value for Pipelines. Should be updated in a production deployment, or be changed to the required API key if not using Pipelines
+  - name: OPENAI_API_KEY
+    value: ""

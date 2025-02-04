@@ -1,0 +1,18 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: demo-virtual-service
+spec:
+  hosts:
+  - demo.144.24.182.101.nip.io
+  gateways:
+  - istio-system/demo-gateway
+  http:
+  - match:
+    - {}
+    route:
+    - destination:
+        host: open-webui.demo.svc.cluster.local
+        port:
+          number: 80
