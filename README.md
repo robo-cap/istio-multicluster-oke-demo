@@ -4,7 +4,7 @@
 
 The purpose of this repo is to document the steps required to configure a [multi-cluster service mesh](https://istio.io/latest/docs/setup/install/multicluster/primary-remote_multi-network/) using Istio.
 
-![alt text](image.png)
+![alt text](images/architecture.png)
 
 
 ## Prerequisites
@@ -156,15 +156,15 @@ Expose the services in `fra` and `ash`.
 
 ## Setup observability
 
-Install `prometheus`
+Install `prometheus`.
 
     kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.24/samples/addons/prometheus.yaml
 
-Install `kiali`
+Install `kiali`.
 
     kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.24/samples/addons/kiali.yaml
 
-Use the following guide to vizualize the Cluster Mesh: https://istio.io/latest/docs/tasks/observability/kiali/
+To vizualize the Cluster Mesh using Kiali follow this guide: https://istio.io/latest/docs/tasks/observability/kiali/
 
 ## Test the services
 
@@ -223,7 +223,13 @@ Verify the cross cluster traffic:
     -- curl -sS helloworld.sample:5000/hello
 
 
-## AI Demo
+## AI Application Demo
+
+We will setup:
+- [Open WebUI](https://github.com/open-webui/open-webui) in `fra`.
+- self-hosted LLM using [sglang](https://github.com/sgl-project/sglang) in `ash`.
+- configure Ingress to expose the Open WebUI service
+- cluster mesh will enable the connection of Open WebUI hosted in `fra` to the LLM service running in `ash`.
 
 Create the demo namespace
 
@@ -241,7 +247,7 @@ Install SGlang in `ash`
 
     # Store HuggingFace token into a K8s secret:
     export $HF_TOKEN=hf_...
-    
+
     kubectl create secret generic hf-secret --from-literal=HF_TOKEN=$HF_TOKEN
     kubectl apply -n demo -f sglang.yaml --context="${CTX_CLUSTER2}"
 
@@ -306,8 +312,6 @@ Cleanup `fra`:
     istioctl uninstall --context="${CTX_CLUSTER1}" -y --purge
     kubectl delete ns istio-system --context="${CTX_CLUSTER1}"
 
-    cd oke-cluster1
-    terraform destroy --auto-approve
 
 Cleanup `ash`:
 
