@@ -128,7 +128,7 @@ Enables the control plane to authenticate connection requests from workloads run
 
 Enables discovery of service endpoints running in `ash`.
 
-Because it has been included in the topology.istio.io/controlPlaneClusters namespace annotation, the control plane on `fra` will also:
+Because it has been included in the `topology.istio.io/controlPlaneClusters` namespace annotation, the control plane on `fra` will also:
 
 - Patch certs in the webhooks in `ash`.
 - Start the namespace controller which writes configmaps in namespaces in `ash`.
